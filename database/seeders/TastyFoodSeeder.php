@@ -49,15 +49,36 @@ class TastyFoodSeeder extends Seeder
         DB::table('beritas')->insert([
             [
                 'judul' => 'Lorem ipsum', 
-                'deskripsi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mauris.', 
-                'img' => 'img/contoh.jpeg', 
+                'deskripsi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ornare, augue eu rutrum commodo.', 
+                'img' => 'img/berita1.jpg', 
                 'created_at' => now(), 
                 'updated_at' => now()
             ],
             [
                 'judul' => 'Lorem ipsum', 
                 'deskripsi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mauris.', 
-                'img' => 'img/contoh.jpeg', 
+                'img' => 'img/berita2.jpg', 
+                'created_at' => now(), 
+                'updated_at' => now()
+            ],
+            [
+                'judul' => 'Lorem ipsum', 
+                'deskripsi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mauris.', 
+                'img' => 'img/berita3.jpg', 
+                'created_at' => now(), 
+                'updated_at' => now()
+            ],
+            [
+                'judul' => 'Lorem ipsum', 
+                'deskripsi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mauris.', 
+                'img' => 'img/berita4.jpg', 
+                'created_at' => now(), 
+                'updated_at' => now()
+            ],
+            [
+                'judul' => 'Lorem ipsum', 
+                'deskripsi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mauris.', 
+                'img' => 'img/berita5.jpg', 
                 'created_at' => now(), 
                 'updated_at' => now()
             ],
