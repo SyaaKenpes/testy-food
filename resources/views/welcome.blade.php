@@ -448,7 +448,7 @@
 
         // Fungsi untuk mendeteksi posisi scroll halaman
         window.addEventListener('scroll', function() {
-            if (window.scrollY > 50) {
+            if (window.scrollY > 100) {
                 // Jika halaman digulung ke bawah
                 navbar.classList.remove('w-full', 'px-8', 'md:px-16', 'py-8', 'justify-start', 'gap-8');
                 navbar.classList.add('fixed', 'top-0', 'left-0', 'w-full', 'bg-white/90', 'backdrop-blur-md', 'px-8', 'md:px-16', 'py-5', 'justify-between', 'shadow-md');
