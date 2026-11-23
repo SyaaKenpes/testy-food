@@ -32,14 +32,14 @@ class TastyFoodSeeder extends Seeder
             [
                 'nama' => 'Lorem ipsum', 
                 'deskripsi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 
-                'img' => 'img/contoh.jpeg', 
+                'img' => 'img/tentang1.png', 
                 'created_at' => now(), 
                 'updated_at' => now()
             ],
             [
                 'nama' => 'Lorem ipsum', 
                 'deskripsi' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.', 
-                'img' => 'img/contoh.jpeg', 
+                'img' => 'img/berita1.jpg', 
                 'created_at' => now(), 
                 'updated_at' => now()
             ],
@@ -105,5 +105,7 @@ class TastyFoodSeeder extends Seeder
                 'updated_at' => now()
             ],
         ]);
+
+        
     }
 }

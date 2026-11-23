@@ -50,7 +50,7 @@
                 <div class="h-80 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
                     <img src="{{ asset('img/berita1.jpg') }}" alt="Food 1" class="w-full h-full object-cover">
                 </div>
-                <div class="h-80 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 mt-8 transition-transform duration-300 hover:scale-105">
+                <div class="h-80 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 mt-6 transition-transform duration-300 hover:scale-105">
                     <img src="{{ asset('img/berita2.jpg') }}" alt="Food 2" class="w-full h-full object-cover">
                 </div>
             </div>
