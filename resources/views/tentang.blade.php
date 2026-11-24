@@ -47,10 +47,12 @@
 
             <!-- Sisi Kanan: 2 Gambar -->
             <div class="lg:col-span-6 grid grid-cols-2 gap-6">
-                <div class="h-80 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
+                <div
+                    class="h-80 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
                     <img src="{{ asset('img/berita1.jpg') }}" alt="Food 1" class="w-full h-full object-cover">
                 </div>
-                <div class="h-80 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 mt-6 transition-transform duration-300 hover:scale-105">
+                <div
+                    class="h-80 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 mt-6 transition-transform duration-300 hover:scale-105">
                     <img src="{{ asset('img/berita2.jpg') }}" alt="Food 2" class="w-full h-full object-cover">
                 </div>
             </div>
@@ -62,10 +64,12 @@
     <section class="max-w-7xl mx-auto py-16 px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <!-- Sisi Kiri: Gambar Visi (Lebar 6 Kolom) -->
         <div class="lg:col-span-6 grid grid-cols-2 gap-6">
-            <div class="h-72 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
+            <div
+                class="h-72 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
                 <img src="{{ asset('img/berita3.jpg') }}" alt="Visi 1" class="w-full h-full object-cover">
             </div>
-            <div class="h-72 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 mt-6 transition-transform duration-300 hover:scale-105">
+            <div
+                class="h-72 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 mt-6 transition-transform duration-300 hover:scale-105">
                 <img src="{{ asset('img/berita4.jpg') }}" alt="Visi 2" class="w-full h-full object-cover">
             </div>
         </div>
@@ -95,55 +99,15 @@
         </div>
         <!-- Sisi Kanan: Gambar Misi (Lebar 6 Kolom) -->
         <div class="lg:col-span-6">
-            <div class="h-80 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
+            <div
+                class="h-80 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
                 <img src="{{ asset('img/berita5.jpg') }}" alt="Misi" class="w-full h-full object-cover">
             </div>
         </div>
     </section>
 
-    <!-- 5. FOOTER (Disamakan strukturnya dengan Home) -->
-    <footer class="bg-black text-white py-16 px-6 md:px-16">
-        <div class="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-10">
-            <div>
-                <h3 class="text-xl font-bold uppercase mb-4">Tasty Food</h3>
-                <p class="text-gray-400 text-sm leading-relaxed">Lorem ipsum dolor sit amet, consectetur adipiscing
-                    elit.</p>
-                <div class="flex space-x-4 mt-4">
-                    <a href="#"
-                        class="w-8 h-8 rounded-full bg-blue-600 flex items-center justify-center text-white"><i
-                            class="fab fa-facebook-f"></i></a>
-                    <a href="#"
-                        class="w-8 h-8 rounded-full bg-sky-400 flex items-center justify-center text-white"><i
-                            class="fab fa-twitter"></i></a>
-                </div>
-            </div>
-            <div>
-                <h4 class="text-lg font-semibold mb-4 uppercase">Useful links</h4>
-                <ul class="space-y-2 text-gray-400 text-sm">
-                    <li><a href="#" class="hover:text-white">Blog</a></li>
-                    <li><a href="#" class="hover:text-white">Hewan</a></li>
-                    <li><a href="#" class="hover:text-white">Galeri</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-lg font-semibold mb-4 uppercase">Privacy</h4>
-                <ul class="space-y-2 text-gray-400 text-sm">
-                    <li><a href="#" class="hover:text-white">Karir</a></li>
-                    <li><a href="#" class="hover:text-white">Tentang Kami</a></li>
-                    <li><a href="#" class="hover:text-white">Kontak Kami</a></li>
-                </ul>
-            </div>
-            <div>
-                <h4 class="text-lg font-semibold mb-4 uppercase">Contact Info</h4>
-                <p class="text-gray-400 text-sm mb-2"><i class="fas fa-envelope mr-2"></i> tastyfood@gmail.com</p>
-                <p class="text-gray-400 text-sm mb-2"><i class="fas fa-phone mr-2"></i> +62 812 3456 7890</p>
-                <p class="text-gray-400 text-sm"><i class="fas fa-map-marker-alt mr-2"></i> Kota Bandung, Jawa Barat</p>
-            </div>
-        </div>
-        <div class="border-t border-gray-800 mt-12 pt-6 text-center text-gray-500 text-xs">
-            Copyright ©2023 All rights reserved
-        </div>
-    </footer>
+    <!-- 5. FOOTER -->
+    @include('layouts.app')
 
 </body>
 

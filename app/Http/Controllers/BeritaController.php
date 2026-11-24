@@ -12,7 +12,10 @@ class BeritaController extends Controller
      */
     public function index()
     {
-        //
+        // Ambil semua data dari database
+        $beritas = Berita::all();
+
+        return view('berita', compact('beritas'));
     }
 
     /**

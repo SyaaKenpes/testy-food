@@ -98,6 +98,7 @@ class TastyFoodSeeder extends Seeder
         // 5. Data Pesan Kontak
         DB::table('kontaks')->insert([
             [
+                'subject' => 'ryo ganteng',
                 'nama' => 'Budi Santoso', 
                 'email' => 'budi@gmail.com', 
                 'pesan' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent mauris.', 

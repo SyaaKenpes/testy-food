@@ -9,11 +9,13 @@ class Kontak extends Model
 {
     use HasFactory;
 
+    protected $table = 'kontaks';
+
     // Kolom yang boleh diisi di form
     protected $fillable = [
         'subject',
-        'name',
+        'nama',
         'email',
-        'message'
+        'pesan'
     ];
 }

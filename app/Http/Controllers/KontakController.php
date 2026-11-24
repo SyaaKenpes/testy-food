@@ -10,9 +10,9 @@ class KontakController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function kontak()
     {
-        //
+        return view('kontak');
     }
 
     /**
@@ -28,7 +28,22 @@ class KontakController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // validasi input dari user
+        $request->validate([
+            'subject'   => 'required|string|max:255',
+            'nama'      => 'required|string|max:255',
+            'email'     => 'required|email|max:255',
+            'pesan'     => 'required|string|max:255',
+        ]);
+
+        Kontak::create([
+            'subject'   => $request->subject,
+            'nama'      => $request->nama,
+            'email'     => $request->email,
+            'pesan'     => $request->pesan,
+        ]);
+
+        return redirect()->back()->with('success', 'Pesan berhasil terkirim! Terima kasih telah menghubungi kami.');
     }
 
     /**
