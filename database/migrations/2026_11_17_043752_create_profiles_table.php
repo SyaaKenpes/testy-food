@@ -16,6 +16,10 @@ return new class extends Migration
             $table->string('judul');
             $table->text('deskripsi');
             $table->string('img')->nullable();
+            $table->text('visi_deskripsi')->nullable();
+            $table->text('misi_deskripsi')->nullable();
+            $table->string('misi_img')->nullable();
+            $table->string('visi_img')->nullable();
             $table->timestamps();
         });
     }

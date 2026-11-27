@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Profile;
 use App\Models\Berita;
 use App\Models\Makanan;
+use Illuminate\Http\Request;
 
 class HomeController extends Controller
 {
@@ -13,33 +14,15 @@ class HomeController extends Controller
     {
         $makanans = Makanan::all();
         $beritas = Berita::all();
-    
-        return view('welcome', compact('makanans', 'beritas'));
+        $tentang = Profile::first();
+
+        return view('welcome', compact('makanans', 'beritas', 'tentang'));
     }
 
-    // Halaman Tentang Kami
-    public function tentang()
-    {
-        return view('tentang');
-    }
-
-    // Halaman Berita (Data berita dikirim juga ke halaman berita)
+    // Halaman Berita Publik
     public function berita()
     {
         $beritas = Berita::all();
-        
         return view('berita', compact('beritas'));
-    }
-
-    // Halaman Galeri
-    public function galeri()
-    {
-        return view('galeri');
-    }
-
-    // Halaman Kontak
-    public function kontak()
-    {
-        return view('kontak');
     }
 }

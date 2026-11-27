@@ -16,44 +16,38 @@
 
     <!-- 1. HERO BANNER ATAS -->
     <div class="relative w-full h-[450px] bg-cover bg-center flex flex-col justify-between p-6 md:px-16"
-        style="background-image: url('{{ asset('img/contoh.jpeg') }}'); background-color: rgba(0,0,0,0.6); background-blend-mode: overlay;">
+        style="background-image: url('{{ isset($tentang->img) ? asset('storage/' . $tentang->img) : asset('img/contoh.jpeg') }}'); background-color: rgba(0,0,0,0.6); background-blend-mode: overlay;">
 
-        <!-- Judul Banner (Disesuaikan proporsinya dengan Home) -->
-        <div class="mt-auto pb-40  w-full">
+        <!-- Judul Banner -->
+        <div class="mt-auto pb-40 w-full">
             <h1 class="text-white text-4xl md:text-5xl font-black uppercase tracking-wide">
-                TENTANG KAMI
+                {{ $tentang->judul ?? 'TENTANG KAMI' }}
             </h1>
         </div>
     </div>
 
     <!-- 2. KONTEN TASTY FOOD & DESKRIPSI -->
-    <section class="w-fu`ll bg-gray-100 py-24">
+    <section class="w-full bg-gray-100 py-24">
         <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
-            <!-- Sisi Kiri: Teks -->
+            <!-- Sisi Kiri -->
             <div class="lg:col-span-6 space-y-6">
                 <h2 class="text-3xl md:text-4xl font-extrabold text-black uppercase">
-                    TASTY FOOD
+                    {{ $tentang->judul ?? 'TASTY FOOD' }}
                 </h2>
                 <p class="text-gray-600 text-base md:text-lg leading-relaxed">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ornare, augue eu rutrum commodo,
-                    dui diam convallis arcu, eget consectetur ex sem eget lacus.
-                </p>
-                <p class="text-gray-600 text-base md:text-lg leading-relaxed">
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus ornare, augue eu rutrum commodo,
-                    dui diam convallis arcu.
+                    {{ $tentang->deskripsi ?? 'Deskripsi belum tersedia.' }}
                 </p>
             </div>
 
-            <!-- Sisi Kanan: 2 Gambar -->
+            <!-- Sisi Kanan -->
             <div class="lg:col-span-6 grid grid-cols-2 gap-6">
-                <div
-                    class="h-80 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
-                    <img src="{{ asset('img/berita1.jpg') }}" alt="Food 1" class="w-full h-full object-cover">
-                </div>
-                <div
-                    class="h-80 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 mt-6 transition-transform duration-300 hover:scale-105">
-                    <img src="{{ asset('img/berita2.jpg') }}" alt="Food 2" class="w-full h-full object-cover">
+                <div class="h-80 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105 col-span-2">
+                    @if(isset($tentang->img))
+                        <img src="{{ asset('storage/' . $tentang->img) }}" alt="Tasty Food" class="w-full h-full object-cover">
+                    @else
+                        <img src="{{ asset('img/berita1.jpg') }}" alt="Food 1" class="w-full h-full object-cover">
+                    @endif
                 </div>
             </div>
 
@@ -62,46 +56,46 @@
 
     <!-- 3. BAGIAN VISI -->
     <section class="max-w-7xl mx-auto py-16 px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        <!-- Sisi Kiri: Gambar Visi (Lebar 6 Kolom) -->
-        <div class="lg:col-span-6 grid grid-cols-2 gap-6">
-            <div
-                class="h-72 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
-                <img src="{{ asset('img/berita3.jpg') }}" alt="Visi 1" class="w-full h-full object-cover">
-            </div>
-            <div
-                class="h-72 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 mt-6 transition-transform duration-300 hover:scale-105">
-                <img src="{{ asset('img/berita4.jpg') }}" alt="Visi 2" class="w-full h-full object-cover">
+        <!-- Sisi Kiri -->
+        <div class="lg:col-span-6">
+            <div class="h-80 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
+                @if(isset($tentang->visi_img))
+                    <img src="{{ asset('storage/' . $tentang->visi_img) }}" alt="Visi" class="w-full h-full object-cover">
+                @else
+                    <img src="{{ asset('img/berita3.jpg') }}" alt="Visi" class="w-full h-full object-cover">
+                @endif
             </div>
         </div>
-        <!-- Sisi Kanan: Teks Visi (Lebar 6 Kolom) -->
+        <!-- Sisi Kanan -->
         <div class="lg:col-span-6 space-y-6">
             <h2 class="text-3xl md:text-4xl font-extrabold text-black uppercase">
                 VISI
             </h2>
             <p class="text-gray-600 text-base md:text-lg leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce scelerisque magna aliquet cursus tempus.
-                Duis viverra metus et turpis elementum elementum. Aliquam rutrum placerat tellus et suscipit.
+                {{ $tentang->visi_deskripsi ?? 'Visi belum diatur oleh admin.' }}
             </p>
         </div>
     </section>
 
     <!-- 4. BAGIAN MISI -->
     <section class="max-w-7xl mx-auto py-16 px-6 md:px-12 mb-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        <!-- Sisi Kiri: Teks Misi (Lebar 6 Kolom) -->
+        <!-- Sisi Kiri -->
         <div class="lg:col-span-6 space-y-6">
             <h2 class="text-3xl md:text-4xl font-extrabold text-black uppercase">
                 MISI
             </h2>
             <p class="text-gray-600 text-base md:text-lg leading-relaxed">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce scelerisque magna aliquet cursus tempus.
-                Duis viverra metus et turpis elementum elementum. Aliquam rutrum placerat tellus et suscipit.
+                {{ $tentang->misi_deskripsi ?? 'Misi belum diatur oleh admin.' }}
             </p>
         </div>
-        <!-- Sisi Kanan: Gambar Misi (Lebar 6 Kolom) -->
+        <!-- Sisi Kanan -->
         <div class="lg:col-span-6">
-            <div
-                class="h-80 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
-                <img src="{{ asset('img/berita5.jpg') }}" alt="Misi" class="w-full h-full object-cover">
+            <div class="h-80 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
+                @if(isset($tentang->misi_img))
+                    <img src="{{ asset('storage/' . $tentang->misi_img) }}" alt="Misi" class="w-full h-full object-cover">
+                @else
+                    <img src="{{ asset('img/berita5.jpg') }}" alt="Misi" class="w-full h-full object-cover">
+                @endif
             </div>
         </div>
     </section>
