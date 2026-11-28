@@ -32,7 +32,7 @@
                     </a>
 
                     <!-- 3. Galeri / Makanan -->
-                    <a href="#" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition duration-200 hover:bg-gray-800 text-gray-300">
+                    <a href="{{ route('admin.galeri.index') }}" class="flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition duration-200 hover:bg-gray-800 text-gray-300">
                         <i class="fa-solid fa-images w-5"></i> Galeri (Makanan)
                     </a>
 

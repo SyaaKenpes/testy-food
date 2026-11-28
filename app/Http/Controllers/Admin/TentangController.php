@@ -3,67 +3,120 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-use App\Models\Profile;
+use App\Models\Berita;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
 
 class TentangController extends Controller
 {
-    // Menampilkan data tentang (mengambil baris pertama dari tabel profiles)
+    // Menampilkan daftar semua berita di panel admin
     public function index()
     {
-        $tentang = Profile::first();
-        return view('admin.tentang', compact('tentang'));
+        $beritas = Berita::orderBy('is_featured', 'desc')->orderBy('urutan', 'asc')->get();
+        return view('admin.berita.index', compact('beritas'));
     }
 
-    // Memperbarui data tentang
+    // Menampilkan form tambah berita
+    public function create()
+    {
+        return view('admin.berita.create');
+    }
+
+    // Menyimpan berita baru ke database
+    public function store(Request $request)
+    {
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'required',
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'is_featured' => 'nullable|boolean',
+            'urutan' => 'nullable|integer|min:1|max:4',
+        ]);
+
+        // Jika berita ini diset sebagai featured (utama), pastikan berita featured sebelumnya di-reset jadi 0
+        if ($request->has('is_featured') && $request->is_featured == 1) {
+            Berita::where('is_featured', 1)->update(['is_featured' => 0]);
+        }
+
+        $imagePath = null;
+        if ($request->hasFile('img')) {
+            $file = $request->file('img');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('img/berita'), $filename);
+            $imagePath = 'img/berita/' . $filename;
+        }
+
+        Berita::create([
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'img' => $imagePath,
+            'is_featured' => $request->has('is_featured') ? 1 : 0,
+            'urutan' => $request->urutan,
+        ]);
+
+        return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil ditambahkan!');
+    }
+
+    // Menampilkan form edit berita
+    public function edit($id)
+    {
+        $berita = Berita::findOrFail($id);
+        return view('admin.berita.edit', compact('berita'));
+    }
+
+    // Memperbarui berita di database
     public function update(Request $request, $id)
-{
-    $request->validate([
-        'judul' => 'required|string|max:255',
-        'deskripsi' => 'required',
-        'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
-        'visi_deskripsi' => 'required',
-        'visi_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
-        'misi_deskripsi' => 'required',
-        'misi_img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
-    ]);
+    {
+        $request->validate([
+            'judul' => 'required|string|max:255',
+            'deskripsi' => 'required',
+            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'is_featured' => 'nullable|boolean',
+            'urutan' => 'nullable|integer|min:1|max:4',
+        ]);
 
-    $tentang = Profile::findOrFail($id);
+        $berita = Berita::findOrFail($id);
 
-    $data = [
-        'judul' => $request->judul,
-        'deskripsi' => $request->deskripsi,
-        'visi_deskripsi' => $request->visi_deskripsi,
-        'misi_deskripsi' => $request->misi_deskripsi,
-    ];
-
-    // Jika ada upload foto profil utama baru
-    if ($request->hasFile('img')) {
-        if ($tentang->img && Storage::disk('public')->exists($tentang->img)) {
-            Storage::disk('public')->delete($tentang->img);
+        // Jika berita ini diset sebagai featured, reset berita featured lainnya
+        if ($request->has('is_featured') && $request->is_featured == 1) {
+            Berita::where('id', '!=', $id)->where('is_featured', 1)->update(['is_featured' => 0]);
         }
-        $data['img'] = $request->file('img')->store('tentang', 'public');
+
+        $data = [
+            'judul' => $request->judul,
+            'deskripsi' => $request->deskripsi,
+            'is_featured' => $request->has('is_featured') ? 1 : 0,
+            'urutan' => $request->has('is_featured') ? null : $request->urutan, // Jika jadi hot news, urutan kosongkan
+        ];
+
+        // Jika ada upload gambar baru
+        if ($request->hasFile('img')) {
+            if ($berita->img && file_exists(public_path($berita->img))) {
+                unlink(public_path($berita->img));
+            }
+            
+            $file = $request->file('img');
+            $filename = time() . '_' . $file->getClientOriginalName();
+            $file->move(public_path('img/berita'), $filename);
+            $data['img'] = 'img/berita/' . $filename;
+        }
+
+        // Eksekusi update ke database
+        $berita->update($data);
+
+        return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil diperbarui!');
     }
 
-    // Jika ada upload foto visi baru
-    if ($request->hasFile('visi_img')) {
-        if ($tentang->visi_img && Storage::disk('public')->exists($tentang->visi_img)) {
-            Storage::disk('public')->delete($tentang->visi_img);
+    // Menghapus berita
+    public function destroy($id)
+    {
+        $berita = Berita::findOrFail($id);
+
+        if ($berita->img && file_exists(public_path($berita->img))) {
+            unlink(public_path($berita->img));
         }
-        $data['visi_img'] = $request->file('visi_img')->store('tentang', 'public');
+
+        $berita->delete();
+
+        return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil dihapus!');
     }
-
-    // Jika ada upload foto misi baru
-    if ($request->hasFile('misi_img')) {
-        if ($tentang->misi_img && Storage::disk('public')->exists($tentang->misi_img)) {
-            Storage::disk('public')->delete($tentang->misi_img);
-        }
-        $data['misi_img'] = $request->file('misi_img')->store('tentang', 'public');
-    }
-
-    $tentang->update($data);
-
-    return redirect()->route('admin.tentang.index')->with('success', 'Halaman Tentang berhasil diperbarui!');
-}   
 }

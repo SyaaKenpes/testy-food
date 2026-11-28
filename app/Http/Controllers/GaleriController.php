@@ -2,18 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Makanan;
+use App\Models\Galeri;
 use Illuminate\Http\Request;
 
 
-class MakananController extends Controller
+class GaleriController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $galeris = Makanan::all();
+        // Mengambil 12 galeri terbaru untuk format grid 4x3
+        $galeris = Galeri::latest()->take(12)->get();
+        
         return view('galeri', compact('galeris'));
     }
 
@@ -36,7 +38,7 @@ class MakananController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Makanan $makanan)
+    public function show(Galeri $galeri)
     {
         //
     }
@@ -44,7 +46,7 @@ class MakananController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Makanan $makanan)
+    public function edit(Galeri $galeri)
     {
         //
     }
@@ -52,7 +54,7 @@ class MakananController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Makanan $makanan)
+    public function update(Request $request, Galeri $galeri)
     {
         //
     }
@@ -60,7 +62,7 @@ class MakananController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Makanan $makanan)
+    public function destroy(Galeri $galeri)
     {
         //
     }

@@ -9,10 +9,10 @@ use Illuminate\Support\Facades\Storage;
 
 class BeritaController extends Controller
 {
-    // Menampilkan daftar berita di panel admin
+    // Menampilkan daftar semua berita di panel admin
     public function index()
     {
-        $beritas = Berita::latest()->get();
+        $beritas = Berita::orderBy('is_featured', 'desc')->orderBy('urutan', 'asc')->get();
         return view('admin.berita.index', compact('beritas'));
     }
 
@@ -28,59 +28,81 @@ class BeritaController extends Controller
         $request->validate([
             'judul' => 'required|string|max:255',
             'deskripsi' => 'required',
-            'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048',  
+            'img' => 'required|image|mimes:jpeg,png,jpg,gif|max:5120',
+            'is_featured' => 'nullable|boolean',
+            'urutan' => 'nullable|integer|min:1|max:4',
         ]);
 
-        // Upload file ke storage folder 'berita'
-        $imgPath = $request->file('img')->store('berita', 'public');
+        // Jika berita ini diset sebagai featured (utama), pastikan berita featured sebelumnya di-reset jadi 0
+        if ($request->has('is_featured') && $request->is_featured == 1) {
+            Berita::where('is_featured', 1)->update(['is_featured' => 0]);
+        }
+
+        $imagePath = $request->file('img')->store('berita', 'public');
 
         Berita::create([
             'judul' => $request->judul,
             'deskripsi' => $request->deskripsi,
-            'img' => $imgPath,
+            'img' => $imagePath,
+            'is_featured' => $request->has('is_featured') ? 1 : 0,
+            'urutan' => $request->urutan,
         ]);
 
         return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil ditambahkan!');
     }
 
     // Menampilkan form edit berita
-    public function edit(Berita $berita)
+    public function edit($id)
     {
+        $berita = Berita::findOrFail($id);
         return view('admin.berita.edit', compact('berita'));
     }
 
-    // Memperbarui data berita
-    public function update(Request $request, Berita $berita)
-    {
-        $request->validate([
-            'judul' => 'required|string|max:255',
-            'deskripsi' => 'required',
-            'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
-        ]);
+    // Memperbarui berita di database
+   // Memperbarui berita di database
+public function update(Request $request, $id)
+{
+    $request->validate([
+        'judul' => 'required|string|max:255',
+        'deskripsi' => 'required',
+        'img' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:5120',
+        'is_featured' => 'nullable|boolean',
+        'urutan' => 'nullable|integer|min:1|max:4',
+    ]);
 
-        $data = [
-            'judul' => $request->judul,
-            'deskripsi' => $request->deskripsi,
-        ];
+    $berita = Berita::findOrFail($id);
 
-        // Jika ada file gambar baru yang diunggah
-        if ($request->hasFile('img')) {
-            // Hapus file img lama jika ada di storage
-            if ($berita->img && Storage::disk('public')->exists($berita->img)) {
-                Storage::disk('public')->delete($berita->img);
-            }
-            $data['img'] = $request->file('img')->store('berita', 'public');
-        }
-
-        $berita->update($data);
-
-        return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil diperbarui!');
+    // Jika berita ini diset sebagai featured, reset berita featured lainnya
+    if ($request->has('is_featured') && $request->is_featured == 1) {
+        Berita::where('id', '!=', $id)->where('is_featured', 1)->update(['is_featured' => 0]);
     }
 
+    $data = [
+        'judul' => $request->judul,
+        'deskripsi' => $request->deskripsi,
+        'is_featured' => $request->has('is_featured') ? 1 : 0,
+        'urutan' => $request->has('is_featured') ? null : $request->urutan, // Jika jadi hot news, urutan kosongkan
+    ];
+
+    // Jika ada upload gambar baru
+    if ($request->hasFile('img')) {
+        if ($berita->img && Storage::disk('public')->exists($berita->img)) {
+            Storage::disk('public')->delete($berita->img);
+        }
+        $data['img'] = $request->file('img')->store('berita', 'public');
+    }
+
+    // Eksekusi update ke database
+    $berita->update($data);
+
+    return redirect()->route('admin.berita.index')->with('success', 'Berita berhasil diperbarui!');
+}
+
     // Menghapus berita
-    public function destroy(Berita $berita)
+    public function destroy($id)
     {
-        // Hapus file img dari storage
+        $berita = Berita::findOrFail($id);
+
         if ($berita->img && Storage::disk('public')->exists($berita->img)) {
             Storage::disk('public')->delete($berita->img);
         }

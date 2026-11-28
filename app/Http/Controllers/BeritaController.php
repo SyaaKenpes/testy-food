@@ -12,10 +12,16 @@ class BeritaController extends Controller
      */
     public function index()
     {
-        // Ambil semua data dari database
-        $beritas = Berita::all();
+        // Mengambil 1 berita utama (hot news) yang ditandai is_featured = 1
+        $mainBerita = Berita::where('is_featured', 1)->first();
 
-        return view('berita', compact('beritas'));
+        // Mengambil berita pendukung berurutan
+        $beritaPendukung = Berita::where('is_featured', 0)
+                            ->orderBy('urutan', 'asc')
+                            ->take(8)
+                            ->get();
+
+        return view('berita', compact('mainBerita', 'beritaPendukung'));
     }
 
     /**

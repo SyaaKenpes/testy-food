@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Profile;
 use App\Models\Berita;
-use App\Models\Makanan;
+use App\Models\Galeri;
 use Illuminate\Http\Request;
 
 class HomeController extends Controller
@@ -12,17 +12,31 @@ class HomeController extends Controller
     // Halaman Utama (Home)
     public function index()
     {
-        $makanans = Makanan::all();
-        $beritas = Berita::all();
+        // Mengambil maksimal 8 galeri terbaru untuk halaman Home
+        $makanans = Galeri::latest()->take(8)->get();
         $tentang = Profile::first();
 
-        return view('welcome', compact('makanans', 'beritas', 'tentang'));
+        // Mengambil 1 berita utama (hot news)
+        $mainBerita = Berita::where('is_featured', 1)->first();
+
+        // Mengambil 4 berita pendukung berurutan
+        $beritaPendukung = Berita::where('is_featured', 0)
+                            ->orderBy('urutan', 'asc')
+                            ->take(4)
+                            ->get();
+
+        return view('welcome', compact('makanans', 'mainBerita', 'beritaPendukung', 'tentang'));
     }
 
     // Halaman Berita Publik
     public function berita()
     {
-        $beritas = Berita::all();
-        return view('berita', compact('beritas'));
+        $mainBerita = Berita::where('is_featured', 1)->first();
+        $beritaPendukung = Berita::where('is_featured', 0)
+                            ->orderBy('urutan', 'asc')
+                            ->take(4)
+                            ->get();
+
+        return view('berita', compact('mainBerita', 'beritaPendukung'));
     }
 }

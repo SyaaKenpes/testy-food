@@ -183,19 +183,19 @@
                 BERITA KAMI
             </h2>
 
-            @if (count($beritas) > 0)
+            <!-- KOLOM KIRI: Berita Utama yang Besar-->
+            @if ($mainBerita)
                 <!-- Layout Utama: Grid 2 Kolom (Kiri: Berita Utama/Besar, Kanan: Grid 4 Berita Kecil) -->
                 <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
 
                     <!-- KOLOM KIRI: Berita Utama yang Besar-->
-                    @php $mainBerita = $beritas->first(); @endphp
                     @if ($mainBerita)
                         <div
                             class="lg:col-span-6 bg-white rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.08)] overflow-hidden flex flex-col justify-between border border-gray-100 transition-transform duration-300 hover:scale-105">
                             <div>
                                 <div class="h-80 w-full overflow-hidden ">
-                                    <img src="{{ asset($mainBerita->img) }}" alt="{{ $mainBerita->judul }}"
-                                        class="w-full h-full object-cover">
+                                    <img src="{{ asset($mainBerita->img) }}"
+                                        alt="{{ $mainBerita->judul }}" class="w-full h-full object-cover">
                                 </div>
                                 <div class="p-8">
                                     <h3 class="text-2xl md:text-3xl font-extrabold text-black uppercase mb-4">
@@ -218,7 +218,7 @@
 
                     <!-- KOLOM KANAN: 4 Berita Kecil (Grid 2x2) -->
                     <div class="lg:col-span-6 grid grid-cols-1 sm:grid-cols-2 gap-6">
-                        @foreach ($beritas->skip(1)->take(4) as $item)
+                        @foreach ($beritaPendukung as $item)
                             <div
                                 class="bg-white rounded-2xl shadow-[0_4px_20px_rgb(0,0,0,0.05)] overflow-hidden flex flex-col justify-between border border-gray-100 transition-transform duration-300 hover:scale-105">
                                 <div>
@@ -257,66 +257,40 @@
 
     <!-- GALERI KAMI SECTION -->
     <section id="galeri" class="w-full bg-white py-24 px-6 md:px-16">
-        <div class="max-w-7xl mx-auto text-center">
+    <div class="max-w-7xl mx-auto text-center">
 
-            <!-- Judul Galeri -->
-            <h2 class="text-4xl md:text-5xl font-black text-black uppercase tracking-wide mb-16">
-                GALERI KAMI
-            </h2>
+        <!-- Judul Galeri -->
+        <h2 class="text-4xl md:text-5xl font-black text-black uppercase tracking-wide mb-16">
+            GALERI KAMI
+        </h2>
 
-            <!-- Grid Foto Galeri (3 Kolom x 2 Baris = 6 Foto) -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+        <!-- Grid Foto Galeri (Dinamis, Maksimal 8 Item) -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+            @php
+                $homeGaleris = \App\Models\Galeri::latest()->take(8)->get();
+            @endphp
 
-                <!-- Foto 1 -->
-                <div
-                    class="w-full h-80 rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
-                    <img src="{{ asset('img/contoh.jpeg') }}" alt="Galeri 1" class="w-full h-full object-cover">
+            @forelse ($homeGaleris as $item)
+                <div class="w-full h-80 rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
+                    <img src="{{ asset($item->img) }}" alt="{{ $item->judul }}" class="w-full h-full object-cover">
                 </div>
-
-                <!-- Foto 2 -->
-                <div
-                    class="w-full h-80 rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
-                    <img src="{{ asset('img/contoh.jpeg') }}" alt="Galeri 2"
-                        class="w-full h-full object-cover bg-gray-50">
+            @empty
+                <div class="col-span-full text-center py-8 text-gray-400 italic">
+                    Belum ada foto galeri yang tersedia.
                 </div>
-
-                <!-- Foto 3 -->
-                <div
-                    class="w-full h-80 rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
-                    <img src="{{ asset('img/contoh.jpeg') }}" alt="Galeri 3" class="w-full h-full object-cover">
-                </div>
-
-                <!-- Foto 4 -->
-                <div
-                    class="w-full h-80 rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
-                    <img src="{{ asset('img/contoh.jpeg') }}" alt="Galeri 4" class="w-full h-full object-cover">
-                </div>
-
-                <!-- Foto 5 -->
-                <div
-                    class="w-full h-80 rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
-                    <img src="{{ asset('img/contoh.jpeg') }}" alt="Galeri 5"
-                        class="w-full h-full object-cover bg-gray-50">
-                </div>
-
-                <!-- Foto 6 -->
-                <div
-                    class="w-full h-80 rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
-                    <img src="{{ asset('img/contoh.jpeg') }}" alt="Galeri 6" class="w-full h-full object-cover">
-                </div>
-
-            </div>
-
-            <!-- Tombol Lihat Lebih Banyak -->
-            <div class="inline-block transition-transform duration-300 hover:scale-105">
-                <a href="#"
-                    class="bg-black text-white font-bold uppercase tracking-widest px-12 py-4 rounded-xl text-sm shadow-xl hover:bg-gray-800 transition duration-300 ">
-                    LIHAT LEBIH BANYAK
-                </a>
-            </div>
-
+            @endforelse
         </div>
-    </section>
+
+        <!-- Tombol Lihat Lebih Banyak -->
+        <div class="inline-block transition-transform duration-300 hover:scale-105">
+            <a href="{{ route('galeri') }}"
+                class="bg-black text-white font-bold uppercase tracking-widest px-12 py-4 rounded-xl text-sm shadow-xl hover:bg-gray-800 transition duration-300">
+                LIHAT LEBIH BANYAK
+            </a>
+        </div>
+
+    </div>
+</section>
 
 
     <script>

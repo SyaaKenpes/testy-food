@@ -13,6 +13,8 @@ return new class extends Migration
     {
         Schema::create('beritas', function (Blueprint $table) {
             $table->id();
+            $table->boolean('is_featured')->default(0);
+            $table->integer('urutan')->nullable();
             $table->string('judul');
             $table->text('deskripsi');
             $table->string('img');

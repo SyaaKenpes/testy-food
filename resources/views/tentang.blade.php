@@ -16,7 +16,7 @@
 
     <!-- 1. HERO BANNER ATAS -->
     <div class="relative w-full h-[450px] bg-cover bg-center flex flex-col justify-between p-6 md:px-16"
-        style="background-image: url('{{ isset($tentang->img) ? asset('storage/' . $tentang->img) : asset('img/contoh.jpeg') }}'); background-color: rgba(0,0,0,0.6); background-blend-mode: overlay;">
+        style="background-image: url('{{ asset('img/contoh.jpeg') }}'); background-color: rgba(0,0,0,0.6); background-blend-mode: overlay;">
 
         <!-- Judul Banner -->
         <div class="mt-auto pb-40 w-full">
@@ -26,7 +26,7 @@
         </div>
     </div>
 
-    <!-- 2. KONTEN TASTY FOOD & DESKRIPSI -->
+    <!-- 2. KONTEN TASTY FOOD & DESKRIPSI (2 Gambar di Kanan) -->
     <section class="w-full bg-gray-100 py-24">
         <div class="max-w-7xl mx-auto px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
 
@@ -40,30 +40,32 @@
                 </p>
             </div>
 
-            <!-- Sisi Kanan -->
+            <!-- Sisi Kanan (2 Gambar Berdampingan) -->
             <div class="lg:col-span-6 grid grid-cols-2 gap-6">
-                <div class="h-80 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105 col-span-2">
-                    @if(isset($tentang->img))
-                        <img src="{{ asset('storage/' . $tentang->img) }}" alt="Tasty Food" class="w-full h-full object-cover">
-                    @else
-                        <img src="{{ asset('img/berita1.jpg') }}" alt="Food 1" class="w-full h-full object-cover">
-                    @endif
+                <div
+                    class="h-90 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
+                    <img src="{{ asset('img/berita4.jpg') }}" alt="Tasty Food 1" class="w-full h-full object-cover">
+                </div>
+                <div
+                    class="h-90 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
+                    <img src="{{ asset('img/berita3.jpg') }}" alt="Tasty Food 2" class="w-full h-full object-cover">
                 </div>
             </div>
 
         </div>
     </section>
 
-    <!-- 3. BAGIAN VISI -->
+    <!-- 3. BAGIAN VISI (2 Gambar di Kiri) -->
     <section class="max-w-7xl mx-auto py-16 px-6 md:px-12 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-        <!-- Sisi Kiri -->
-        <div class="lg:col-span-6">
-            <div class="h-80 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
-                @if(isset($tentang->visi_img))
-                    <img src="{{ asset('storage/' . $tentang->visi_img) }}" alt="Visi" class="w-full h-full object-cover">
-                @else
-                    <img src="{{ asset('img/berita3.jpg') }}" alt="Visi" class="w-full h-full object-cover">
-                @endif
+        <!-- Sisi Kiri (2 Gambar Berdampingan) -->
+        <div class="lg:col-span-6 grid grid-cols-2 gap-6">
+            <div
+                class="h-100 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
+                <img src="{{ asset('img/berita1.jpg') }}" alt="Visi 1" class="w-full h-full object-cover">
+            </div>
+            <div
+                class="h-100 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
+                <img src="{{ asset('img/berita3.jpg') }}" alt="Visi 2" class="w-full h-full object-cover">
             </div>
         </div>
         <!-- Sisi Kanan -->
@@ -77,7 +79,7 @@
         </div>
     </section>
 
-    <!-- 4. BAGIAN MISI -->
+    <!-- 4. BAGIAN MISI (1 Gambar Lebar di Sisi Kanan) -->
     <section class="max-w-7xl mx-auto py-16 px-6 md:px-12 mb-24 grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
         <!-- Sisi Kiri -->
         <div class="lg:col-span-6 space-y-6">
@@ -90,12 +92,9 @@
         </div>
         <!-- Sisi Kanan -->
         <div class="lg:col-span-6">
-            <div class="h-80 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
-                @if(isset($tentang->misi_img))
-                    <img src="{{ asset('storage/' . $tentang->misi_img) }}" alt="Misi" class="w-full h-full object-cover">
-                @else
-                    <img src="{{ asset('img/berita5.jpg') }}" alt="Misi" class="w-full h-full object-cover">
-                @endif
+            <div
+                class="h-80 w-full rounded-3xl overflow-hidden shadow-lg border border-gray-100 transition-transform duration-300 hover:scale-105">
+                <img src="{{ asset('img/berita2.jpg') }}" alt="Misi" class="w-full h-full object-cover">
             </div>
         </div>
     </section>

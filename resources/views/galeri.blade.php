@@ -23,9 +23,9 @@
         @include('layouts.navbar')
 
         <!-- Judul Banner di Bagian Bawah -->
-        <div class="mt-auto pb-40  w-full">
+        <div class="mt-auto pb-16 w-full">
             <h1 class="text-white text-4xl md:text-5xl font-black uppercase tracking-wide">
-                BERITA KAMI
+                GALERI KAMI
             </h1>
         </div>
     </div>
@@ -35,7 +35,8 @@
         activeSlide: 0,
         images: [
             @foreach ($galeris as $item)
-                    '{{ asset($item->img) }}', @endforeach
+                '{{ asset($item->img) }}', 
+            @endforeach
         ],
         next() {
             this.activeSlide = (this.activeSlide + 1) % this.images.length;
@@ -46,26 +47,25 @@
     }">
         <div class="max-w-5xl mx-auto px-6">
             @if (count($galeris) > 0)
-                <div
-                    class="relative w-full h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-2xl border border-gray-100 bg-gray-100 flex items-center justify-center">
+                <div class="relative w-full h-[400px] md:h-[500px] rounded-3xl overflow-hidden shadow-2xl border border-gray-100 bg-gray-100 flex items-center justify-center">
 
                     <!-- Menampilkan Gambar Aktif Berdasarkan Slider -->
                     <template x-for="(img, index) in images" :key="index">
                         <div x-show="activeSlide === index"
-                            class="absolute inset-name w-full h-full transition-opacity duration-500 ease-in-out">
+                            class="absolute inset-0 w-full h-full transition-opacity duration-500 ease-in-out">
                             <img :src="img" alt="Featured Galeri" class="w-full h-full object-cover">
                         </div>
                     </template>
 
                     <!-- Tombol Panah Kiri (<) -->
                     <button @click="prev()"
-                        class="absolute left-6 z-10 w-12 h-12 rounded-full bg-white/90 hover:bg-white text-black shadow-lg flex items-center justify-center text-xl transition-transform duration-300 hover:scale-110">
+                        class="absolute left-6 z-10 w-12 h-12 rounded-full bg-white/90 hover:bg-white text-black shadow-lg flex items-center justify-center text-xl transition-transform duration-300 hover:scale-110 cursor-pointer">
                         <i class="fas fa-chevron-left"></i>
                     </button>
 
                     <!-- Tombol Panah Kanan (>) -->
                     <button @click="next()"
-                        class="absolute right-6 z-10 w-12 h-12 rounded-full bg-white/90 hover:bg-white text-black shadow-lg flex items-center justify-center text-xl transition-transform duration-300 hover:scale-110">
+                        class="absolute right-6 z-10 w-12 h-12 rounded-full bg-white/90 hover:bg-white text-black shadow-lg flex items-center justify-center text-xl transition-transform duration-300 hover:scale-110 cursor-pointer">
                         <i class="fas fa-chevron-right"></i>
                     </button>
                 </div>
@@ -77,15 +77,15 @@
         </div>
     </section>
 
-    <!-- 3. GRID GALERI FOTO LAINNYA -->
+    <!-- 3. GRID GALERI FOTO LENGKAP -->
     <section class="w-full bg-gray-100 py-24">
         <div class="max-w-7xl mx-auto px-6 md:px-12">
             @if (count($galeris) > 0)
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
-                    @foreach ($galeris->take(4) as $item)
+                    @foreach ($galeris as $item)
                         <div
-                            class="h-64 w-full rounded-3xl overflow-hidden shadow-[0_4px_20px_rgb(0,0,0,0.05)] border border-gray-100 transition-transform duration-300 hover:scale-105">
-                            <img src="{{ asset($item->img) }}" alt="Galeri Foto" class="w-full h-full object-cover">
+                            class="h-64 w-full rounded-3xl overflow-hidden shadow-[0_4px_20px_rgb(0,0,0,0.05)] border border-gray-100 transition-transform duration-300 hover:scale-105 bg-white">
+                            <img src="{{ asset($item->img) }}" alt="{{ $item->judul }}" class="w-full h-full object-cover">
                         </div>
                     @endforeach
                 </div>
